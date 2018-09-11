@@ -1,11 +1,10 @@
 {
   "name": "generator-koajs",
   "version": "1.0.0",
-  "description": "A generator for creating a seed koajs project ",
+  "description": "A generator for creating a seed koajs project",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,8 @@
   },
   "homepage": "https://github.com/limbuster/generator-koajs#readme",
   "dependencies": {
-    "validate-npm-package-name": "^3.0.0",
+    "inquirer-npm-name": "^3.0.0",
+    "lodash": "^4.17.10",
     "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {

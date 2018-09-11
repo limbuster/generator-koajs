@@ -1,5 +1,7 @@
+const path = require('path');
 const Generator = require('yeoman-generator');
-const validatePackageName = require('validate-npm-package-name');
+const askName = require('inquirer-npm-name');
+const _ = require('lodash');
 
 module.exports = class extends Generator {
   // The name `constructor` is important here
@@ -7,8 +9,12 @@ module.exports = class extends Generator {
     // Calling the super constructor is important so our generator is correctly set up
     super(args, opts);
 
-    // Next, add your custom code
-    this.option('babel'); // This method adds support for a `--babel` flag
+    this.option('projectRoot', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Relative path to the project code root',
+    });
   }
 
   initializing() {
@@ -17,20 +23,89 @@ module.exports = class extends Generator {
     // Pre set the default props from the information we have at this point
     this.props = {
       name: this.pkg.name,
-      description: 'A starter project for claudia api app',
+      description: 'A generator for creating a seed koajs project',
+    };
+  }
+
+  /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
+  async _askForModuleName() {
+    let askedName;
+    console.log(this.props);
+    if (this.props.name) {
+      askedName = { name: this.props.name };
+    } else {
+      askedName = await askName({
+        name: 'name',
+        default: path.basename(process.cwd()),
+      }, this);
+    }
+    const answer = askedName;
+    const moduleNameParts = this._getModuleNameParts(answer.name);
+    Object.assign(this.props, moduleNameParts);
+  }
+
+  _getModuleNameParts(name) {
+    const moduleName = {
+      name,
+      repositoryName: this.props.repositoryName,
     };
 
-    console.log(this.options.name);
-
-    if (this.options.name) {
-      const { name } = this.options;
-      const packageNameValidity = validatePackageName(name);
-
-      if (packageNameValidity.validForNewPackages) {
-        this.props.name = name;
-      } else {
-        throw new Error(packageNameValidity.errors[0] || 'The name option is not a valid npm package name.');
-      }
+    if (moduleName.name.startsWith('@')) {
+      const nameParts = moduleName.name.slice(1).split('/');
+      Object.assign(moduleName, {
+        scopeName: nameParts[0],
+        localName: nameParts[1],
+      });
+    } else {
+      moduleName.localName = moduleName.name;
     }
+
+    if (!moduleName.repositoryName) {
+      moduleName.repositoryName = moduleName.localName;
+    }
+    return moduleName;
+  }
+
+  async prompting() {
+    await this._askForModuleName();
+    this.config.save(this.props);
+  }
+
+  writing() {
+    // Re-read the content at this point because a composed generator might modify it.
+    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+
+    const pkg = _.merge(
+      {
+        name: this.props.name,
+        version: '0.0.0',
+        description: this.props.description,
+        author: {
+          name: this.props.authorName,
+          email: this.props.authorEmail,
+        },
+        files: [this.options.projectRoot],
+        main: path.join(this.options.projectRoot, 'app.js').replace(/\\/g, '/'),
+        keywords: [],
+        dependencies: {},
+        devDependencies: {},
+        engines: {
+          npm: '>= 5.0.0',
+        },
+        scripts: {
+          lint: 'eslint .',
+          test: 'jest .',
+        },
+      },
+      currentPkg,
+    );
+
+    // Combine the keywords
+    if (this.props.keywords && this.props.keywords.length) {
+      pkg.keywords = _.uniq(this.props.keywords.concat(pkg.keywords));
+    }
+
+    // Let's extend package.json so we're not overwriting user previous fields
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   }
 };
