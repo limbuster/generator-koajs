@@ -23,6 +23,7 @@
   "homepage": "https://github.com/limbuster/generator-koajs#readme",
   "dependencies": {
     "inquirer-npm-name": "^3.0.0",
+    "koa": "^2.5.3",
     "lodash": "^4.17.10",
     "yeoman-generator": "^3.1.1"
   },

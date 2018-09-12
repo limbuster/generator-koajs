@@ -30,7 +30,6 @@ module.exports = class extends Generator {
   /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
   async _askForModuleName() {
     let askedName;
-    console.log(this.props);
     if (this.props.name) {
       askedName = { name: this.props.name };
     } else {
@@ -66,13 +65,18 @@ module.exports = class extends Generator {
     return moduleName;
   }
 
+  default() {
+    this.composeWith(require.resolve('../boilerplates'));
+    this.composeWith(require.resolve('../editorconfig'));
+    this.composeWith(require.resolve('../eslint'));
+  }
+
   async prompting() {
     await this._askForModuleName();
     this.config.save(this.props);
   }
 
   writing() {
-    // Re-read the content at this point because a composed generator might modify it.
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     const pkg = _.merge(
@@ -92,10 +96,7 @@ module.exports = class extends Generator {
         engines: {
           npm: '>= 5.0.0',
         },
-        scripts: {
-          lint: 'eslint .',
-          test: 'jest .',
-        },
+        scripts: {},
       },
       currentPkg,
     );
@@ -107,5 +108,13 @@ module.exports = class extends Generator {
 
     // Let's extend package.json so we're not overwriting user previous fields
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+  }
+
+  installing() {
+    this.npmInstall();
+  }
+
+  end() {
+    this.log('The seed project for koajs api was successfully scaffolded.');
   }
 };
