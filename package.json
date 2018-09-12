@@ -4,7 +4,8 @@
   "description": "A generator for creating a seed koajs project",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/limbuster/generator-koajs#readme",
   "dependencies": {
     "inquirer-npm-name": "^3.0.0",
+    "jest": "^23.6.0",
     "koa": "^2.5.3",
     "lodash": "^4.17.10",
     "yeoman-generator": "^3.1.1"
@@ -30,6 +32,7 @@
   "devDependencies": {
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.14.0",
+    "yeoman-test": "^1.9.1"
   }
 }
