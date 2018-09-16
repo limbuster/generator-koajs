@@ -33,6 +33,7 @@ module.exports = class extends Generator {
       },
       devDependencies: {
         jest: rootPkg.devDependencies.jest,
+        'generator-jest': rootPkg.devDependencies['generator-jest'],
       },
       scripts: {
         start: 'node ./src/app',
