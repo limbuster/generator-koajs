@@ -43,6 +43,30 @@ module.exports = class extends Generator {
     Object.assign(this.props, moduleNameParts);
   }
 
+  // Ask for the author's name and email
+  _askFor() {
+    const prompts = [
+      {
+        name: 'authorName',
+        message: "Author's Name",
+        when: !this.props.authorName,
+        default: this.user.git.name(),
+        store: true,
+      },
+      {
+        name: 'authorEmail',
+        message: "Author's Email",
+        when: !this.props.authorEmail,
+        default: this.user.git.email(),
+        store: true,
+      },
+    ];
+
+    return this.prompt(prompts).then((props) => {
+      this.props = _.merge(this.props, props);
+    });
+  }
+
   _getModuleNameParts(name) {
     const moduleName = {
       name,
@@ -73,6 +97,7 @@ module.exports = class extends Generator {
 
   async prompting() {
     await this._askForModuleName();
+    await this._askFor.call(this);
     this.config.save(this.props);
   }
 
