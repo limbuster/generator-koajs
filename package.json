@@ -1,6 +1,6 @@
 {
   "name": "generator-koajs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A generator for creating a seed koajs project",
   "main": "index.js",
   "scripts": {
@@ -27,13 +27,13 @@
     "koa": "^2.5.3",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
+    "generator-jest": "^1.6.0",
     "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "generator-jest": "^1.6.0",
     "jest": "^23.6.0",
     "supertest": "^3.3.0",
     "yeoman-assert": "^3.1.1",
