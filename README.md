@@ -4,6 +4,29 @@
 
 Yeoman generator to scaffold koa.js API with eslint, editorconfig and jest.
 
+## Installation
+First install the yeoman genrator cli
+```bash
+npm install yo
+```
+
+Then install this project
+```bash
+npm install generator-koajs
+```
+
+Create a directory where you want to create the scaffolded api and cd into it
+```bash
+mkdir slick-api
+cd slick-api
+```
+
+Then run the generator
+```bash
+yo koajs
+```
+
+
 ## A opinionated koa.js seed project generator
 This generate will generate a koa.js seed project that will include the following components:
 - [koa](https://koajs.com/)
