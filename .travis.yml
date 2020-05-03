@@ -13,7 +13,7 @@ deploy:
   provider: npm
   email: kumar.limbu@me.com
   api_key:
-    secure: XBPE+Fj6yqBJOZuqyvrTYlAhkglYTaPJFbWbG/uh67WHG+I0quvkf3sqowHgOg8EOn2zez6KadhquTrByoqKdZP2MAnX+AlsJAZHxy2f45CjAKXs8VhDMHxVXuRcoTJQQ99C1/Ggf7tj8jh6C2fdV4QAqw4DcafOEexDd5GVwX+NWbVP7utDxisGgM4h5QDZi+wvO9D8lE/RUGmbv72GSOwBENyaq0ZbwCMR3v4HbGv6Re7O0PR36YyjJ85njavB7peH9UB+cozGgbOQu+80Fo+cYQd9i+Sev9nrTsTRvfY5zjk+RNw8pBFGd82GLwXQJQSJE2GsMaXC5VkmnGEIjbvp2M7f1eKR1/5cfOznz//rxxmctGLge6zpULCHt5dFk2ZB1veRMN9Ei9utrnbF43yysdOa4ABM7x2bXkIBUlPMXSJ7kEAamT+lNJGJeLKMT2L8RR9BmOTRBaDVL3jyVwqgW7yv4pIraiEo+s0QFbGwNHi+5s+RfBmUMhs2fmVPzTyyOJlorGZt6239h+DDirjMvq65VOCsdI7YvygZRLDD0cbVbuJKpu8wAG2k2dGuHEVi4GDi3OriFRB38DSlhj9KpGWhXD29ZFG56fpkbnaMSE+cs1HZYOkoPtpMyHuog8FtxbDLft6Ar8DYbxeIdhCR+L9CPM5ILVy2M+XjzmA=
+    secure: $NPM_API_KEY
   on:
     tags: true
     repo: limbuster/generator-koajs
